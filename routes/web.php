@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\AdminBarangController;
 */
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -26,6 +26,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('admin.dashboard.index');
 
     Route::get('/admin/barang', [AdminBarangController::class, 'index'])->name('admin.barang.index');
+    Route::get('/admin/barang/create', [AdminBarangController::class, 'create'])->name('admin.barang.create');
+    Route::get('/admin/barang/{id}/edit', [AdminBarangController::class, 'edit'])->name('admin.barang.edit');
+    Route::post('/admin/barang/store', [AdminBarangController::class, 'store'])->name('admin.barang.store');
+    Route::put('/admin/barang/{id}/update', [AdminBarangController::class, 'update'])->name('admin.barang.update');
+    Route::delete('/admin/barang/{id}/destroy', [AdminBarangController::class, 'destroy'])->name('admin.barang.destroy');
+
+
+    Route::get('/admin/barang/search', [AdminBarangController::class, 'search']);
 });
 
 Route::middleware(['auth', 'role:karyawan'])->group(function () {

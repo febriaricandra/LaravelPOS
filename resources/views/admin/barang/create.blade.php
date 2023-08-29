@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.admin')
 
 @section('title', 'Form Barang - PT Minamas TC')
 
@@ -7,15 +7,7 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">Tambah Barang</h1>
             <ol class="breadcrumb mb-4">
-                @php
-                    $user = Auth::user();
-                @endphp
-
-                @if ($user->role == 'admin')
-                    <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
-                @else
-                    <li class="breadcrumb-item"><a href="{{ route('karyawan.index') }}">Dashboard</a></li>
-                @endif
+                    <li class="breadcrumb-item"><a href="{{ route('admin.barang.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active">Tambah Barang</li>
             </ol>
 
@@ -24,11 +16,7 @@
                     <i class="fas fa-plus"></i> Tambah Barang
                 </div>
                 <div class="card-body">
-                    @if($user->role == 'admin')
                     <form action="{{route('admin.barang.store')}}" method="POST" enctype="multipart/form-data">
-                    @else
-                    <form action="{{route('karyawan.barang.store')}}" method="POST" enctype="multipart/form-data">
-                    @endif
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Barang</label>
@@ -44,7 +32,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        @if($user->role == 'admin')
                         <div class="mb-3">
                             <label for="harga beli" class="form-label">Harga Beli</label>
                             <input type="number" class="form-control" id="harga beli" name="harga_beli" required>
@@ -52,7 +39,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        @endif
                         <div class="mb-3">
                             <label for="stok" class="form-label">Stok</label>
                             <input type="number" class="form-control" id="stok" name="stok" required>

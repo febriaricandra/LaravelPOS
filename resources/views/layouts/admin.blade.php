@@ -49,7 +49,7 @@
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Data</div>
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="{{route('admin.barang.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
                                 Barang
                             </a>
