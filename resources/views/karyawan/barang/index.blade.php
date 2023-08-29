@@ -10,6 +10,12 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
+                <span class="d-block">{{ session('error') }}</span>
+            </div>
+        @endif
+
         <h1 class="mt-4">Data Barang</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Barang</li>
@@ -23,6 +29,12 @@
                 <a href="{{ route('karyawan.barang.create') }}" class="btn btn-success mb-3">
                     <i class="fas fa-plus"></i> Tambah barang
                 </a>
+                <form action="/karyawan/barang/search" method="GET" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" name="search" placeholder="Search...">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -46,8 +58,8 @@
                                     <td>{{ $item->stok }}</td>
                                     <td>{{ $item->keterangan }}</td>
                                     <td>
-                                        <a href="" class="btn btn-primary">Edit</a>
-                                        <form action="" method="POST" style="display: inline-block;">
+                                        <a href="{{route('karyawan.barang.edit', $item->id)}}" class="btn btn-primary">Edit</a>
+                                        <form action="{{route('karyawan.barang.destroy', $item->id)}}" method="POST" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -62,10 +74,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    @if ($barang->currentPage() !== 1)
-                        <a href="{{ $barang->previousPageUrl() }}">Previous</a>
-                    @endif
-                    <a href="{{ $barang->nextPageUrl() }}">Next</a>
+
+                    {{ $barang->links() }}
                 </div>
             </div>
         </div>

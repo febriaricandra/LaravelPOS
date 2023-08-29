@@ -16,8 +16,8 @@ use App\Http\Controllers\Admin\AdminBarangController;
 |
 */
 
-Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/', [AuthController::class, 'index'])->name('auth.index');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -49,5 +49,9 @@ Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::get('/karyawan/barang', [KaryawanBarangController::class, 'index'])->name('karyawan.barang.index');
     Route::get('/karyawan/barang/create', [KaryawanBarangController::class, 'create'])->name('karyawan.barang.create');
     Route::post('/karyawan/barang/store', [KaryawanBarangController::class, 'store'])->name('karyawan.barang.store');
-    Route::get('/karyawan/barang/{id}/update', [KaryawanBarangController::class, 'update'])->name('karyawan.barang.update');
+    Route::put('/karyawan/barang/{id}/update', [KaryawanBarangController::class, 'update'])->name('karyawan.barang.update');
+    Route::get('/karyawan/barang/{id}/edit', [KaryawanBarangController::class, 'edit'])->name('karyawan.barang.edit');
+    Route::delete('/karyawan/barang/{id}/destroy', [KaryawanBarangController::class, 'destroy'])->name('karyawan.barang.destroy');
+
+    Route::get('/karyawan/barang/search', [KaryawanBarangController::class, 'search']);
 });

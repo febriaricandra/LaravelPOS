@@ -16,7 +16,7 @@
                 <i class="fas fa-plus"></i> Edit Barang
             </div>
             <div class="card-body">
-                <form action="{{route('admin.barang.update', $barang->id)}}" method="PUT" enctype="multipart/form-data">
+                <form action="{{route('admin.barang.update', $barang->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
