@@ -22,7 +22,7 @@
                 <div class="d-flex flex-column">
                     <div>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Recipient's username"
+                            <input type="text" class="form-control" placeholder="Product name"
                                 aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <span class="input-group-text" id="basic-addon2">
                                 <i class="fas fa-plus"></i>
@@ -31,6 +31,70 @@
                     </div>
                     <div>
                         <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <td>Product 1</td>
+                                    <td>Rp 12,000</td>
+                                    <td>2</td>
+                                    <td>Rp 24,000</td>
+                                    <td>
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Product 1</td>
+                                    <td>Rp 12,000</td>
+                                    <td>2</td>
+                                    <td>Rp 24,000</td>
+                                    <td>
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Product 1</td>
+                                    <td>Rp 12,000</td>
+                                    <td>2</td>
+                                    <td>Rp 24,000</td>
+                                    <td>
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Product 1</td>
+                                    <td>Rp 12,000</td>
+                                    <td>2</td>
+                                    <td>Rp 24,000</td>
+                                    <td>
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Product 1</td>
+                                    <td>Rp 12,000</td>
+                                    <td>2</td>
+                                    <td>Rp 24,000</td>
+                                    <td>
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </td>
+                                </tr>
                         </table>
                     </div>
                     <div class="d-flex flex-column">
