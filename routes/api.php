@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/barang', function (){
+    return response()->json([
+        'message' => 'success',
+        'data' => [
+            'id' => 1,
+            'nama' => 'Buku',
+            'harga' => 10000,
+            'stok' => 10,
+        ]
+    ]);
+});
