@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Symfony\Component\Console\Input\Input;
+use Alert;
 
 class AdminBarangController extends Controller
 {
@@ -26,6 +27,7 @@ class AdminBarangController extends Controller
 
     public function store(Request $request)
     {
+        $now = DB::raw('CURRENT_TIMESTAMP');
         $request->validate([
             'nama_barang' => 'required',
             'harga_jual' => 'required',
@@ -39,7 +41,10 @@ class AdminBarangController extends Controller
             'harga_beli' => $request->harga_beli,
             'stok' => $request->stok,
             'keterangan' => $request->keterangan,
+            'created_at' => $now,
+            'updated_at' => $now,
         ]);
+        alert()->success('Success', 'Data Barang Berhasil Ditambahkan!');
         return redirect('/admin/barang')->with('status', 'Data Barang Berhasil Ditambahkan!');
     }
 
@@ -64,6 +69,7 @@ class AdminBarangController extends Controller
             'stok' => $request->stok,
             'keterangan' => $request->keterangan,
         ]);
+        alert()->success('Success', 'Data Barang Berhasil diubah!');
         return redirect('/admin/barang')->with('status', 'Data Barang Berhasil Diubah!');
     }
 

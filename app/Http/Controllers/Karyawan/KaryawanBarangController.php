@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KaryawanBarangController extends Controller
 {
     public function index()
     {
         $barang = DB::table('table_barang')->paginate(5);
-
         return view('karyawan.barang.index', compact('barang'));
     }
 
@@ -23,6 +23,7 @@ class KaryawanBarangController extends Controller
 
     public function store(Request $request)
     {
+        $now = DB::raw('CURRENT_TIMESTAMP');
         $request->validate([
             'nama_barang' => 'required',
             'harga_jual' => 'required',
@@ -35,7 +36,10 @@ class KaryawanBarangController extends Controller
             'harga_beli' => 0,
             'stok' => $request->stok,
             'keterangan' => $request->keterangan,
+            'created_at' => $now,
+            'updated_at' => $now,
         ]);
+        alert()->success('Success', 'Data Barang Berhasil Ditambahkan!');
         return redirect('/karyawan/barang')->with('status', 'Data Barang Berhasil Ditambahkan!');
     }
 
@@ -52,6 +56,7 @@ class KaryawanBarangController extends Controller
             'stok' => $request->stok,
             'keterangan' => $request->keterangan,
         ]);
+        alert()->success('Success', 'Data Barang Berhasil Diubah!');
         return redirect('/karyawan/barang')->with('status', 'Data Barang Berhasil Diubah!');
     }
 

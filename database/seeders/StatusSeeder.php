@@ -13,8 +13,6 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-
         $status = [
             [
                 'status' => 'Lunas'

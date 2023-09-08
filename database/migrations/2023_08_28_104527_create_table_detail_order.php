@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('id_barang');
             $table->bigInteger('jumlah');
             $table->bigInteger('harga_total');
-            $table->string('keterangan')->nullable();
-
+            $table->bigInteger('kembalian');
+            $table->bigInteger('bayar');
             $table->foreign('id_order')->references('id')->on('table_order')->onDelete('cascade');
             $table->foreign('id_barang')->references('id')->on('table_barang')->onDelete('cascade');
             $table->timestamps();

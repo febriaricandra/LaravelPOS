@@ -3,11 +3,12 @@
 @section('title', 'Form Barang - PT Minamas TC')
 
 @section('content')
+    @include('sweetalert::alert')
     <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Tambah Barang</h1>
             <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.barang.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.barang.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active">Tambah Barang</li>
             </ol>
 
@@ -16,7 +17,7 @@
                     <i class="fas fa-plus"></i> Tambah Barang
                 </div>
                 <div class="card-body">
-                    <form action="{{route('admin.barang.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.barang.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Barang</label>

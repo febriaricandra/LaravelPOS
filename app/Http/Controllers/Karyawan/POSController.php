@@ -5,72 +5,79 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Alert;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class POSController extends Controller
 {
     //
     public function index(Request $request)
     {
-        $cart = $request->session()->get('cart', []);
         $barang = DB::table('table_barang')->paginate(4);
-        return view('karyawan.pos.index', compact('barang', 'cart'));
-    }
-
-    public function add_to_cart(Request $request)
-    {
-        $cart = $request->session()->get('cart', []);
-        $id = $request->id;
-        $barang = DB::table('table_barang')->where('id', $id)->first();
-        $cart[$id] = [
-            'id' => $id,
-            'nama_barang' => $barang->nama_barang,
-            'harga_jual' => $barang->harga_jual,
-            'qty' => 1,
-        ];
-        $request->session()->put('cart', $cart);
-        return redirect('/karyawan/pos');
-    }
-
-    public function remove_from_cart(Request $request)
-    {
-        $cart = $request->session()->get('cart', []);
-        $id = $request->id;
-        unset($cart[$id]);
-        $request->session()->put('cart', $cart);
-        return redirect('/karyawan/pos');
-    }
-
-    public function clear_cart(Request $request)
-    {
-        $request->session()->forget('cart');
-        return redirect('/karyawan/pos');
-    }
-
-    public function add_qty(Request $request)
-    {
-        $cart = $request->session()->get('cart', []);
-        $id = $request->id;
-        $cart[$id]['qty']++;
-        $request->session()->put('cart', $cart);
-        return redirect('/karyawan/pos');
-    }
-
-    public function reduce_qty(Request $request)
-    {
-        $cart = $request->session()->get('cart', []);
-        $id = $request->id;
-        $cart[$id]['qty']--;
-        if ($cart[$id]['qty'] == 0) {
-            unset($cart[$id]);
-        }
-        $request->session()->put('cart', $cart);
-        return redirect('/karyawan/pos');
+        $status = DB::table('table_status')->get();
+        return view('karyawan.pos.index', compact('barang', 'status'));
     }
 
     public function search(Request $request)
     {
         $search_text = $request->search;
         $barang = DB::table('table_barang')->where('nama_barang', 'LIKE', '%' . $search_text . '%')->paginate(4);
-        return view('karyawan.pos.index', compact('barang'));
+        $status = DB::table('table_status')->get();
+        return view('karyawan.pos.index', compact('barang', 'status'));
+    }
+
+    public function checkout(Request $request)
+    {
+        $now = DB::raw('CURRENT_TIMESTAMP');
+        $request->validate([
+            'submitOrder' => 'required',
+            'status' => 'required',
+            'bayar' => 'required|gt:0|numeric',
+            'kembalian' => 'required|numeric',
+            'harga_total' => 'required|gt:0|numeric',
+        ]);
+
+        try{
+            DB::table('table_order')->insert([
+                'id' => IdGenerator::generate(['table' => 'table_order', 'length' => 10, 'prefix' => 'INV-']),
+                'id_status' => $request->status,
+                'id_user' => auth()->user()->id,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+    
+            $id_order = DB::table('table_order')->where('id_user', auth()->user()->id)->orderBy('id', 'desc')->first();
+    
+            $submitOrder = json_decode($request->submitOrder);
+    
+            foreach ($submitOrder as $key => $value) {
+                DB::table('table_detail_order')->insert([
+                    'id_order' => $id_order->id,
+                    'id_barang' => $value->id,
+                    'jumlah' => $value->quantity,
+                    'harga_total' => $request->harga_total,
+                    'bayar' => $request->bayar,
+                    'kembalian' => $request->kembalian,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+
+            //stock update
+            foreach ($submitOrder as $key => $value) {
+                $barang = DB::table('table_barang')->where('id', $value->id)->first();
+                $stok = $barang->stok - $value->quantity;
+                DB::table('table_barang')->where('id', $value->id)->update([
+                    'stok' => $stok,
+                ]);
+            }
+    
+            alert()->success('Success', 'Pembelian Berhasil!');
+            return redirect('/karyawan/pos')->with('status', 'Pembelian Berhasil!');
+        }
+        catch(\Exception $e){
+            alert()->error('Error', 'Pembelian gagal!');
+            return redirect('/karyawan/pos')->with('status', 'Pembelian gagal!');
+        }
     }
 }

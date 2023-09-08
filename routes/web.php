@@ -33,6 +33,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/barang/{id}/update', [AdminBarangController::class, 'update'])->name('admin.barang.update');
     Route::delete('/admin/barang/{id}/destroy', [AdminBarangController::class, 'destroy'])->name('admin.barang.destroy');
     Route::get('/admin/barang/search', [AdminBarangController::class, 'search']);
+
+    //order admin
+    Route::get('/admin/order', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.order.index');
+    Route::get('/admin/order/{id}/show', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('admin.order.show');
 });
 
 
@@ -55,9 +59,9 @@ Route::middleware(['auth', 'role:karyawan'])->group(function () {
     //pos
     Route::get('/karyawan/pos', [POSController::class, 'index'])->name('karyawan.pos.index');
     Route::get('/karyawan/pos/search', [POSController::class, 'search']);
-    Route::post('/karyawan/pos/add_to_cart', [POSController::class, 'add_to_cart'])->name('karyawan.pos.add_to_cart');
-    Route::post('/karyawan/pos/remove_from_cart', [POSController::class, 'remove_from_cart'])->name('karyawan.pos.remove_from_cart');
-    Route::post('/karyawan/pos/clear_cart', [POSController::class, 'clear_cart'])->name('karyawan.pos.clear_cart');
-    Route::post('/karyawan/pos/add_qty', [POSController::class, 'add_qty'])->name('karyawan.pos.add_qty');
-    Route::post('/karyawan/pos/reduce_qty', [POSController::class, 'reduce_qty'])->name('karyawan.pos.reduce_qty');
+    Route::post('/karyawan/pos/checkout', [POSController::class, 'checkout'])->name('karyawan.pos.checkout');
+
+    //order karyawan
+    Route::get('/karyawan/order', [App\Http\Controllers\Karyawan\OrderController::class, 'index'])->name('karyawan.order.index');
+    Route::get('/karyawan/order/{id}/show', [App\Http\Controllers\Karyawan\OrderController::class, 'show'])->name('karyawan.order.show');
 });

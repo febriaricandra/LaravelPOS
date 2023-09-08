@@ -3,6 +3,7 @@
 @section('title', 'Edit Barang - PT Minamas TC')
 
 @section('content')
+@include('sweetalert::alert')
 <div>
     <div class="container-fluid px-4">
         <h1 class="mt-4">Edit Barang</h1>
