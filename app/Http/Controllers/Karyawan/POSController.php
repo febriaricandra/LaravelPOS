@@ -42,6 +42,7 @@ class POSController extends Controller
                 'id' => IdGenerator::generate(['table' => 'table_order', 'length' => 10, 'prefix' => 'INV-']),
                 'id_status' => $request->status,
                 'id_user' => auth()->user()->id,
+                'harga_total' => $request->harga_total,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -55,7 +56,7 @@ class POSController extends Controller
                     'id_order' => $id_order->id,
                     'id_barang' => $value->id,
                     'jumlah' => $value->quantity,
-                    'harga_total' => $request->harga_total,
+                    'subtotal' => $value->subtotal,
                     'bayar' => $request->bayar,
                     'kembalian' => $request->kembalian,
                     'created_at' => $now,

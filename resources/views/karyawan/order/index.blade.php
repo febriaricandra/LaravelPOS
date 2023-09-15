@@ -19,6 +19,8 @@
                         <tr>
                             <th>Nomor Invoice</th>
                             <th>Status</th>
+                            <th>Total</th>
+                            <th>Kasir</th>
                             <th>Tanggal Order</th>
                             <th>Action</th>
                         </tr>
@@ -28,6 +30,8 @@
                         <tr>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->status }}</td>
+                            <td>{{ $item->harga_total }}</td>
+                            <td>{{ $item->name }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>
                                 <a href="{{ route('karyawan.order.show', $item->id) }}" class="btn btn-success">Detail</a>

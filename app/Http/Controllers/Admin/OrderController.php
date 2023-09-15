@@ -13,7 +13,8 @@ class OrderController extends Controller
     public function index(){
         $order = DB::table('table_order')
             ->join('table_status', 'table_order.id_status', '=', 'table_status.id')
-            ->select('table_order.id', 'table_order.created_at', 'table_status.status')
+            ->join('users', 'table_order.id_user', '=', 'users.id')
+            ->select('table_order.id', 'table_order.created_at', 'table_status.status', 'table_order.harga_total', 'users.name')
             ->orderBy('table_order.id', 'desc')
             ->paginate(10);
 
@@ -26,7 +27,7 @@ class OrderController extends Controller
             ->join('table_detail_order', 'table_order.id', '=', 'table_detail_order.id_order')
             ->join('table_barang', 'table_detail_order.id_barang', '=', 'table_barang.id')
             ->join('table_status', 'table_order.id_status', '=', 'table_status.id')
-            ->select('table_order.id', 'table_order.created_at', 'table_status.status', 'table_barang.nama_barang', 'table_barang.harga_jual', 'table_detail_order.jumlah', 'table_detail_order.harga_total')
+            ->select('table_order.id', 'table_order.created_at', 'table_status.status', 'table_barang.nama_barang', 'table_barang.harga_jual', 'table_detail_order.jumlah', 'table_detail_order.subtotal')
             ->where('table_order.id', '=', $id)
             ->get();
         return view('admin.order.show', compact('order'));

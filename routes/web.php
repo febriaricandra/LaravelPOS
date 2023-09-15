@@ -22,10 +22,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.dashboard.index');
-    })->name('admin.dashboard.index');
-
+    Route::get('/admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard.index');
     Route::get('/admin/barang', [AdminBarangController::class, 'index'])->name('admin.barang.index');
     Route::get('/admin/barang/create', [AdminBarangController::class, 'create'])->name('admin.barang.create');
     Route::get('/admin/barang/{id}/edit', [AdminBarangController::class, 'edit'])->name('admin.barang.edit');
@@ -37,15 +34,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     //order admin
     Route::get('/admin/order', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.order.index');
     Route::get('/admin/order/{id}/show', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('admin.order.show');
+
+    //karyawan
+    Route::get('/admin/karyawan', [App\Http\Controllers\Admin\KaryawanController::class, 'index'])->name('admin.karyawan.index');
+    Route::get('/admin/karyawan/create', [App\Http\Controllers\Admin\KaryawanController::class, 'create'])->name('admin.karyawan.create');
+    Route::post('/admin/karyawan/store', [App\Http\Controllers\Admin\KaryawanController::class, 'store'])->name('admin.karyawan.store');
+    Route::delete('/admin/karyawan/{id}/destroy', [App\Http\Controllers\Admin\KaryawanController::class, 'destroy'])->name('admin.karyawan.destroy');
 });
 
 
 
 
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
-    Route::get('/karyawan', function () {
-        return view('karyawan.dashboard.index');
-    })->name('karyawan.dashboard.index');
+    Route::get('/karyawan', [App\Http\Controllers\Karyawan\DashboardController::class, 'index'])->name('karyawan.dashboard.index');
 
 
     Route::get('/karyawan/barang', [KaryawanBarangController::class, 'index'])->name('karyawan.barang.index');

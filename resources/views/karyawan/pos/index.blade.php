@@ -68,14 +68,7 @@
                         <input class="d-none" name="bayar" id="bayar">
                         <input class="d-none" name="kembalian" id="kembalian">
                         <input class="d-none" name="submitOrder" id="submitOrder">
-                        <div class="mx-2">
-                            <select class="custom-select-sm form-control" id="status" name="status">
-                                @foreach ($status as $item)
-                                    <option class="" id="status" value="{{ $item->id }}">{{ $item->status }}
-                                    </option>
-                                @endforEach
-                            </select>
-                        </div>
+                        <input class="d-none" name="status" id="inputStatus">
                         <button class="card-body btn bg-primary w-100" id="order">
                             <h5>Bayar</h5>
                         </button>
@@ -150,6 +143,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <input type="number" id="amount" class="form-control mb-2" placeholder="Amount Paid">
+                            <select class="custom-select-sm form-control my-2" id="status" name="status">
+                                <option class="" id="status" value="">Pilih status</option>
+                                @foreach ($status as $item)
+                                    <option class="" id="status" value="{{ $item->id }}">{{ $item->status }}
+                                    </option>
+                                @endforEach
+                            </select>
                             <button id="checkoutButton" class="btn btn-primary">Checkout</button>
                             <button id="clearButton" class="btn btn-danger">Clear</button>
                         </div>
@@ -221,6 +221,7 @@
 
                 if (existingItem) {
                     existingItem.quantity++;
+                    existingItem.subtotal = existingItem.price * existingItem.quantity;
                 } else {
                     var name = $(this).closest("tr").find("td:eq(0)").text();
                     var price = parseFloat($(this).closest("tr").find("td:eq(1)").text().replace(
@@ -231,7 +232,8 @@
                         name: name,
                         price: price,
                         stok: stok,
-                        quantity: 1
+                        quantity: 1,
+                        subtotal: price
                     });
                 }
                 localStorage.setItem("cart", JSON.stringify(cart));
@@ -241,9 +243,10 @@
                 var id = $(this).data("id");
                 var index = cart.findIndex(item => item.id === id);
                 if (index !== -1) {
+                    //delete cart from array
                     cart.splice(index, 1);
-                    updateCart();
                     localStorage.setItem("cart", JSON.stringify(cart));
+                    updateCart();
                     localStorage.setItem("cartTotal", 0);
                     localStorage.setItem("bayar", 0);
                     localStorage.setItem("kembalian", 0);
@@ -263,6 +266,7 @@
                         }
                     } else if (quantity <= item.stok) {
                         item.quantity = quantity;
+                        item.subtotal = item.price * item.quantity;
                     }
                     updateCart();
                     localStorage.setItem("cart", JSON.stringify(cart));
@@ -309,6 +313,12 @@
                 $("#submitOrder").val(null);
                 updateCart();
             })
+
+            //if status selected, then fill value of inputStatus
+            $(document).on("change", "#status", function() {
+                var status = $(this).val();
+                $("#inputStatus").val(status);
+            });
 
             // Initialize the cart on page load
             updateCart();

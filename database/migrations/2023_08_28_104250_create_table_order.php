@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_status');
+            $table->bigInteger('harga_total');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_status')->references('id')->on('table_status')->onDelete('cascade');
             $table->timestamps();

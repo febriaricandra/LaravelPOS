@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('id_order');
             $table->string('id_barang');
             $table->bigInteger('jumlah');
-            $table->bigInteger('harga_total');
+            $table->bigInteger('subtotal');
             $table->bigInteger('kembalian');
             $table->bigInteger('bayar');
             $table->foreign('id_order')->references('id')->on('table_order')->onDelete('cascade');

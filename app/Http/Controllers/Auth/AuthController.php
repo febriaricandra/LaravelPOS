@@ -24,12 +24,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('name', 'password');
-
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 'admin') {
-                return redirect()->route('admin.dashboard.index');
-            } else if (Auth::user()->role == 'karyawan') {
-                return redirect()->route('karyawan.dashboard.index');
+            $user = Auth::user();
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('admin.dashboard.index');
+                case 'karyawan':
+                    return redirect()->route('karyawan.dashboard.index');
+                default:
+                    return redirect()->back()->with('status', 'Role tidak valid.');
             }
         } else {
             return redirect()->back()->with('status', 'Username atau Password Salah!');

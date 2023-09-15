@@ -21,6 +21,7 @@
                             <th>Nomor Invoice</th>
                             <th>Nama Barang</th>
                             <th>Harga Jual</th>
+                            <th>Subtotal</th>
                             <th>Jumlah</th>
                             <th>Tanggal Order</th>
                         </tr>
@@ -31,6 +32,7 @@
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->nama_barang }}</td>
                             <td>{{ $item->harga_jual }}</td>
+                            <td>{{ $item->subtotal }}</td>
                             <td>{{ $item->jumlah }}</td>
                             <td>{{ $item->created_at }}</td>
                         </tr>
