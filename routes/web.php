@@ -40,6 +40,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/karyawan/create', [App\Http\Controllers\Admin\KaryawanController::class, 'create'])->name('admin.karyawan.create');
     Route::post('/admin/karyawan/store', [App\Http\Controllers\Admin\KaryawanController::class, 'store'])->name('admin.karyawan.store');
     Route::delete('/admin/karyawan/{id}/destroy', [App\Http\Controllers\Admin\KaryawanController::class, 'destroy'])->name('admin.karyawan.destroy');
+
+    //utang
+    Route::get('/admin/utang', [App\Http\Controllers\Admin\UtangController::class, 'index'])->name('admin.utang.index');
+    Route::get('/admin/utang/{id}/show', [App\Http\Controllers\Admin\UtangController::class, 'show'])->name('admin.utang.show');
+    Route::get('/admin/utang/{id}/edit', [App\Http\Controllers\Admin\UtangController::class, 'edit'])->name('admin.utang.edit');
+    Route::put('/admin/utang/{id}/update', [App\Http\Controllers\Admin\UtangController::class, 'update'])->name('admin.utang.update');
 });
 
 
@@ -65,4 +71,10 @@ Route::middleware(['auth', 'role:karyawan'])->group(function () {
     //order karyawan
     Route::get('/karyawan/order', [App\Http\Controllers\Karyawan\OrderController::class, 'index'])->name('karyawan.order.index');
     Route::get('/karyawan/order/{id}/show', [App\Http\Controllers\Karyawan\OrderController::class, 'show'])->name('karyawan.order.show');
+
+    //utang
+    Route::get('/karyawan/utang', [App\Http\Controllers\Karyawan\UtangController::class, 'index'])->name('karyawan.utang.index');
+    Route::get('/karyawan/utang/{id}/show', [App\Http\Controllers\Karyawan\UtangController::class, 'show'])->name('karyawan.utang.show');
+    Route::get('/karyawan/utang/{id}/edit', [App\Http\Controllers\Karyawan\UtangController::class, 'edit'])->name('karyawan.utang.edit');
+    Route::put('/karyawan/utang/{id}/update', [App\Http\Controllers\Karyawan\UtangController::class, 'update'])->name('karyawan.utang.update');
 });

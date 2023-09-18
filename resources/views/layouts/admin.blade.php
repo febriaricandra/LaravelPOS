@@ -61,9 +61,8 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
                             Barang
                         </a>
-                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-                            aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fab fa-neos"></i></div>
+                        <a class="nav-link" href="{{ route('admin.utang.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Utang
                         </a>
                         <a class="nav-link" href="{{ route('admin.order.index') }}">

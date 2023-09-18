@@ -15,7 +15,8 @@ This is a simple point of sales system for a small business. It is built with La
 7. Run `php artisan migrate`
 8. Run `php artisan db:seed --class=CreateUsersSeeder` to create admin user
 9. Run `php artisan db:seed --class=BarangSeeder` to create barang
-10. Run `php artisan serve`
+10. Run `php artisan db:seed --class=StatusSeeder` to create status
+11. Run `php artisan serve`
 
 
 ## Features
@@ -38,6 +39,24 @@ This is a simple point of sales system for a small business. It is built with La
 - [Laravel](https://laravel.com/)
 - [SBAdmin](https://startbootstrap.com/template/sb-admin)
 - [Laravel IdGenerator](https://github.com/haruncpi/laravel-id-generator)
+- [ChartJS](https://www.chartjs.org/)
+- [Bootstrap](https://getbootstrap.com/)
 
 ## Screenshots
 
+--- Login Page ---
+![Login Page](/screenshot/Login.png)
+
+--- Admin ---
+![Admin Dashboard](/screenshot/admin/admin%20Halaman%20Utama%20-%20PT%20Minamas%20TC.png)
+![Halaman Barang](/screenshot/admin/admin%20Halaman%20Barang%20-%20PT%20Minamas%20TC.png)
+![Halaman Order](/screenshot/admin/admin%20Halaman%20Order%20-%20PT%20Minamas%20TC.png)
+![Halaman Utang](/screenshot//admin/admin%20Halaman%20Utang%20-%20PT%20Minamas%20TC.png)
+![Halaman Karyawan](/screenshot/admin/admin%20Halaman%20Karyawan%20-%20PT%20Minamas%20TC.png)
+
+--- Karyawan ---
+![Karyawan Dashboard](/screenshot/karyawan/Halaman%20Utama%20-%20PT%20Minamas%20TC.png)
+![Halaman Barang](/screenshot/karyawan/Halaman%20Barang%20-%20PT%20Minamas%20TC.png)
+![Halaman Order](/screenshot/karyawan/Halaman%20Order%20-%20PT%20Minamas%20TC.png)
+![Halaman Utang](/screenshot/karyawan/Halaman%20Utang%20-%20PT%20Minamas%20TC.png)
+![Halaman Point Of Sale](/screenshot/karyawan/Point%20Of%20Sale%20-%20PT%20Minamas%20TC.png)

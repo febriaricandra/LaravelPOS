@@ -55,7 +55,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Barang
                             </a>
-                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <a class="nav-link" href="{{route('karyawan.utang.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Utang
                             </a>

@@ -13,10 +13,12 @@ class DashboardController extends Controller
     {
         //take revenue from table_order 
         $revenue = DB::table('table_order')
+            ->where('id_status', '=', 1)
             ->sum('harga_total');
         //take revenue by month and years
         $revenuePerMonth = DB::table('table_order')
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('SUM(harga_total) as revenue'), DB::raw('COUNT(id) as orders'))
+            ->where('id_status', '=', 1)
             ->groupBy('month', 'year')
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')

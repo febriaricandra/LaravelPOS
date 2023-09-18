@@ -14,6 +14,7 @@ class OrderController extends Controller
             ->join('table_status', 'table_order.id_status', '=', 'table_status.id')
             ->join('users', 'table_order.id_user', '=', 'users.id')
             ->select('table_order.id', 'table_order.created_at', 'table_status.status', 'table_order.harga_total', 'users.name')
+            ->where('table_status.id', '=', 1)
             ->orderBy('table_order.id', 'desc')
             ->paginate(10);
 
