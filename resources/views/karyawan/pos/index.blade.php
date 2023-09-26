@@ -152,6 +152,7 @@
                             </select>
                             <button id="checkoutButton" class="btn btn-primary">Checkout</button>
                             <button id="clearButton" class="btn btn-danger">Clear</button>
+                            <button id="printReceipt" class="btn btn-success">Receipt</button>
                         </div>
                     </div>
                 </div>
@@ -161,6 +162,51 @@
     <script>
         $(document).ready(function() {
             var cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            //open print dialog
+            $("#printReceipt").click(function() {
+                updateCart();
+                //create receipt template 
+            var receipt = "<div class='text-center'>";
+            receipt += "<h3>Receipt</h3>";
+            receipt += "<h5>PT. Sumber Langgeng Sejahtera</h5>";
+            receipt += "<p>Jl. Raya Cikarang - Cibarusah No. 27, Cikarang Selatan, Bekasi</p>";
+            receipt += "<p>Phone: 021-897-1234</p>";
+            receipt += "<p>==========================================</p>";
+            receipt += "<table class='table table-striped'>";
+            receipt += "<thead>";
+            receipt += "<tr>";
+            receipt += "<th>Item</th>";
+            receipt += "<th>Qty</th>";
+            receipt += "<th>Price</th>";
+            receipt += "<th>Subtotal</th>";
+            receipt += "</tr>";
+            receipt += "</thead>";
+            receipt += "<tbody>";
+            cart.forEach(function(item) {
+                receipt += "<tr>";
+                receipt += "<td>" + item.name + "</td>";
+                receipt += "<td>" + item.quantity + "</td>";
+                receipt += "<td>" + formatRupiah(item.price) + "</td>";
+                receipt += "<td>" + formatRupiah(item.price * item.quantity) + "</td>";
+                receipt += "</tr>";
+            });
+            receipt += "</tbody>";
+            receipt += "</table>";
+            receipt += "<p>==========================================</p>";
+            receipt += "<h5>Total: " + formatRupiah(localStorage.getItem("cartTotal")) + "</h5>";
+            receipt += "<h5>Amount Paid: " + $("#amount").val() + "</h5>";
+            receipt += "<h5>Kembalian: " + formatRupiah($("#amount").val() - localStorage.getItem("cartTotal")) +
+                "</h5>";
+            receipt += "<p>==========================================</p>";
+            receipt += "<p>Thank you for shopping with us!</p>";
+            receipt += "</div>";
+                var originalContents = document.body.innerHTML;
+                document.body.innerHTML = receipt;
+                window.print();
+                document.body.innerHTML = originalContents;
+                location.reload();
+            });
 
             function updateCart() {
                 $("#cartBody").empty();

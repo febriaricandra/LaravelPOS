@@ -77,4 +77,9 @@ Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::get('/karyawan/utang/{id}/show', [App\Http\Controllers\Karyawan\UtangController::class, 'show'])->name('karyawan.utang.show');
     Route::get('/karyawan/utang/{id}/edit', [App\Http\Controllers\Karyawan\UtangController::class, 'edit'])->name('karyawan.utang.edit');
     Route::put('/karyawan/utang/{id}/update', [App\Http\Controllers\Karyawan\UtangController::class, 'update'])->name('karyawan.utang.update');
+
+    //invoice 
+    Route::get('/karyawan/invoice', function(){
+        return view('karyawan.invoice.index');
+    });
 });
