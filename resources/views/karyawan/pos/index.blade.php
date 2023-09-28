@@ -109,7 +109,10 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">Tidak ada data</td>
+                                        <td colspan="4" class="text-center">
+                                            <a href="{{ route('karyawan.pos.index') }}"
+                                            class="btn">Data tidak ditemukan</a>
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -172,6 +175,7 @@
             receipt += "<h5>PT. Sumber Langgeng Sejahtera</h5>";
             receipt += "<p>Jl. Raya Cikarang - Cibarusah No. 27, Cikarang Selatan, Bekasi</p>";
             receipt += "<p>Phone: 021-897-1234</p>";
+            receipt += "<p>Date: " + new Date().toLocaleDateString() + "</p>";
             receipt += "<p>==========================================</p>";
             receipt += "<table class='table table-striped'>";
             receipt += "<thead>";
@@ -268,6 +272,11 @@
                 if (existingItem) {
                     existingItem.quantity++;
                     existingItem.subtotal = existingItem.price * existingItem.quantity;
+                    if(existingItem.quantity > existingItem.stok){
+                        alert("Stok tidak mencukupi");
+                        existingItem.quantity--;
+                        existingItem.subtotal = existingItem.price * existingItem.quantity;
+                    }
                 } else {
                     var name = $(this).closest("tr").find("td:eq(0)").text();
                     var price = parseFloat($(this).closest("tr").find("td:eq(1)").text().replace(
