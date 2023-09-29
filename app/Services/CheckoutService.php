@@ -8,11 +8,22 @@ class CheckoutService
 {
     private $idGenerator;
 
+    /**
+     * CheckoutService constructor.
+     *
+     * @param IdGenerator $idGenerator The ID generator instance to be used.
+     */
     public function __construct(IdGenerator $idGenerator)
     {
         $this->idGenerator = $idGenerator;
     }
 
+    /**
+     * Checkout function to create order, order items, and update stock.
+     *
+     * @param  array  $request  The request data containing order and order items information.
+     * @return bool             Returns true if checkout process is successful, false otherwise.
+     */
     public function checkout($request)
     {
         $now = DB::raw('CURRENT_TIMESTAMP');
@@ -31,6 +42,13 @@ class CheckoutService
         }
     }
 
+    /**
+     * Create an order and insert it into the table_order database table.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  string  $now
+     * @return string  $orderId
+     */
     private function createOrder($request, $now)
     {
         $orderId = $this->idGenerator->generate(['table' => 'table_order', 'length' => 10, 'prefix' => 'INV-']);
@@ -45,6 +63,14 @@ class CheckoutService
         return $orderId;
     }
 
+    /**
+     * Create order items based on the submitted order.
+     *
+     * @param Illuminate\Http\Request $request The HTTP request object.
+     * @param int $orderId The ID of the order.
+     * @param string $now The current date and time.
+     * @return void
+     */
     private function createOrderItems($request, $orderId, $now)
     {
         $orderItems = json_decode($request->submitOrder);
@@ -63,6 +89,12 @@ class CheckoutService
         }
     }
 
+    /**
+     * Update the stock of items in the database based on the submitted order.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return void
+     */
     private function updateStock($request)
     {
         $orderItems = json_decode($request->submitOrder);
