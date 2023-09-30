@@ -93,7 +93,7 @@
                 Pendapatan
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px">
                     <thead>
                         <tr>
                             <th>Total Order</th>
