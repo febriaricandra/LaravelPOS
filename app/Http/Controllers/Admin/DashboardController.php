@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\DashboardService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,32 +10,20 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     //
+    private $dashboardService;
+
+    public function __construct(DashboardService $dashboardService)
+    {
+        $this->dashboardService = $dashboardService;
+    }
+
     public function index()
     {
-        //take revenue from table_order 
-        $revenue = DB::table('table_order')
-            ->where('id_status', '=', 1)
-            ->sum('harga_total');
-        //take revenue by month and years
-        $revenuePerMonth = DB::table('table_order')
-            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('SUM(harga_total) as revenue'), DB::raw('COUNT(id) as orders'))
-            ->where('id_status', '=', 1)
-            ->groupBy('month', 'year')
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
-            ->get();
-
-        //total barang
-        $barang = DB::table('table_barang')->count();
-
-        //total karyawan
-        $karyawan = DB::table('users')->count();
-
-        //total utang
-        $utang = DB::table('table_order')
-            ->where('id_status', '=', 2)
-            ->count();
-
+        $revenue = $this->dashboardService->getData()['revenue'];
+        $revenuePerMonth = $this->dashboardService->getData()['revenuePerMonth'];
+        $barang = $this->dashboardService->getData()['barang'];
+        $karyawan = $this->dashboardService->getData()['karyawan'];
+        $utang = $this->dashboardService->getData()['utang'];
         $revenueJson = json_encode($revenuePerMonth);
         return view('admin.dashboard.index', compact('revenue','revenuePerMonth', 'revenueJson', 'barang', 'karyawan', 'utang'));
     }

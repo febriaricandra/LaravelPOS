@@ -199,7 +199,7 @@
             receipt += "</table>";
             receipt += "<p>==========================================</p>";
             receipt += "<h5>Total: " + formatRupiah(localStorage.getItem("cartTotal")) + "</h5>";
-            receipt += "<h5>Amount Paid: " + $("#amount").val() + "</h5>";
+            receipt += "<h5>Jumlah Bayar: " + $("#amount").val() + "</h5>";
             receipt += "<h5>Kembalian: " + formatRupiah($("#amount").val() - localStorage.getItem("cartTotal")) +
                 "</h5>";
             receipt += "<p>==========================================</p>";

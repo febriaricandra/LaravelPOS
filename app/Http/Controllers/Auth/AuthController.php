@@ -15,12 +15,23 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout()
     {
         Auth::logout();
         return redirect('/');
     }
 
+    /**
+     * Handle an authentication attempt.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('name', 'password');
