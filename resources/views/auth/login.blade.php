@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 
-@section('title', 'Halaman Masuk - PT Minamas TC')
+@section('title', 'Halaman Masuk - PT Gajah Mungkur')
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-5">

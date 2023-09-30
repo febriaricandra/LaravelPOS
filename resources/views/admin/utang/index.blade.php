@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Halaman Utang - PT Minamas TC')
+@section('title', 'Halaman Utang - PT Gajah Mungkur')
 @section('content')
     <div class="container-fluid px-4">
         <h1 class="mt-4">Data Utang</h1>

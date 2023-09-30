@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Form Barang - PT Minamas TC')
+@section('title', 'Form Barang - PT Gajah Mungkur')
 
 @section('content')
     @include('sweetalert::alert')

@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Point Of Sale - PT Minamas TC')
+@section('title', 'Point Of Sale - PT Gajah Mungkur')
 
 @section('content')
     @include('sweetalert::alert')

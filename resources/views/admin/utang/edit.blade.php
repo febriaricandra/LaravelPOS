@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Barang - PT Minamas TC')
+@section('title', 'Edit Barang - PT Gajah Mungkur')
 
 @section('content')
 @include('sweetalert::alert')

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Halaman Detail Order - PT Minamas TC')
+@section('title', 'Halaman Detail Order - PT Gajah Mungkur')
 
 @section('content')
     <div class="container-fluid px-4">

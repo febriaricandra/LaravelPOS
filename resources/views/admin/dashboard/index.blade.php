@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 
-@section('title', 'Halaman Utama - PT Minamas TC')
+@section('title', 'Halaman Utama - PT Gajah Mungkur')
 
 @section('content')
     <div class="container-fluid px-4">
