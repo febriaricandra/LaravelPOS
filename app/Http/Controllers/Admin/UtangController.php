@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\UtangService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,27 +10,22 @@ use Illuminate\Support\Facades\DB;
 class UtangController extends Controller
 {
     //
+    private $utangService;
+
+    public function __construct(UtangService $utangService)
+    {
+        $this->utangService = $utangService;
+    }
+
     public function index(){
-        $utang = DB::table('table_order')
-        ->join('table_status', 'table_order.id_status', '=', 'table_status.id')
-        ->join('users', 'table_order.id_user', '=', 'users.id')
-        ->select('table_order.id', 'table_order.harga_total', 'table_order.created_at', 'table_status.status', 'users.name')
-        ->where('table_status.id', '=', 2)
-        ->paginate(10);
+        $utang = $this->utangService->getData();
 
         return view('admin.utang.index', compact('utang'));
     }
 
     public function show($id){
         //relationship between table_order, table_detail_order, table_barang, table_status
-        $utang = DB::table('table_order')
-            ->join('table_detail_order', 'table_order.id', '=', 'table_detail_order.id_order')
-            ->join('table_barang', 'table_detail_order.id_barang', '=', 'table_barang.id')
-            ->join('table_status', 'table_order.id_status', '=', 'table_status.id')
-            ->select('table_order.id', 'table_order.created_at', 'table_status.status', 'table_barang.nama_barang', 'table_barang.harga_jual', 'table_detail_order.jumlah', 'table_detail_order.subtotal')
-            ->where('table_order.id', '=', $id)
-            ->get();
-        
+        $utang = $this->utangService->showData($id);
         $status = DB::table('table_status')->get();
         return view('admin.utang.show', compact('utang', 'status'));
     }
@@ -41,16 +37,7 @@ class UtangController extends Controller
     }
 
     public function update(Request $request, $id){
-        $request->validate([
-            'status' => 'required'
-        ]);
-
-        DB::table('table_order')
-            ->where('id', $id)
-            ->update([
-                'id_status' => $request->status
-            ]);
-
+        $item = $this->utangService->update($request, $id);
         return redirect('/admin/utang')->with('status', 'Data utang berhasil diupdate!');
     }
 }
