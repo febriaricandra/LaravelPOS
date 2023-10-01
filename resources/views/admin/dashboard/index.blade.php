@@ -142,11 +142,15 @@
         dataset.forEach(function(item) {
             data.labels.push(item.month + ' / ' + item.year);
             data.datasets[0].data.push(item.revenue);
+            data.datasets[0].data.reverse();
+            data.labels.reverse();
         });
 
         dataset.forEach(function(item) {
             dataBar.labels.push(item.month + ' / ' + item.year);
             dataBar.datasets[0].data.push(item.orders);
+            dataBar.datasets[0].data.reverse();
+            dataBar.labels.reverse();
         });
 
         var myLineChart = new Chart(ctx, {
@@ -174,11 +178,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            callback: function(value, index, values) {
-                                return value.toLocaleString(undefined, {
-                                    maximumFractionDigits: 0
-                                });
-                            }
+                            stepSize: 1
                         }
                     }
                 }

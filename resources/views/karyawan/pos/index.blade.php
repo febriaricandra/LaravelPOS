@@ -110,8 +110,8 @@
                                 @empty
                                     <tr>
                                         <td colspan="4" class="text-center">
-                                            <a href="{{ route('karyawan.pos.index') }}"
-                                            class="btn">Data tidak ditemukan</a>
+                                            <a href="{{ route('karyawan.pos.index') }}" class="btn">Data tidak
+                                                ditemukan</a>
                                         </td>
                                     </tr>
                                 @endforelse
@@ -169,48 +169,44 @@
             //open print dialog
             $("#printReceipt").click(function() {
                 updateCart();
-                //create receipt template 
-            var receipt = "<div class='text-center'>";
-            receipt += "<h3>Receipt</h3>";
-            receipt += "<h5>PT. Sumber Langgeng Sejahtera</h5>";
-            receipt += "<p>Jl. Raya Cikarang - Cibarusah No. 27, Cikarang Selatan, Bekasi</p>";
-            receipt += "<p>Phone: 021-897-1234</p>";
-            receipt += "<p>Date: " + new Date().toLocaleDateString() + "</p>";
-            receipt += "<p>==========================================</p>";
-            receipt += "<table class='table table-striped'>";
-            receipt += "<thead>";
-            receipt += "<tr>";
-            receipt += "<th>Item</th>";
-            receipt += "<th>Qty</th>";
-            receipt += "<th>Price</th>";
-            receipt += "<th>Subtotal</th>";
-            receipt += "</tr>";
-            receipt += "</thead>";
-            receipt += "<tbody>";
-            cart.forEach(function(item) {
-                receipt += "<tr>";
-                receipt += "<td>" + item.name + "</td>";
-                receipt += "<td>" + item.quantity + "</td>";
-                receipt += "<td>" + formatRupiah(item.price) + "</td>";
-                receipt += "<td>" + formatRupiah(item.price * item.quantity) + "</td>";
-                receipt += "</tr>";
+
+                var receiptWindow = window.open('', 'PRINT', 'height=400,width=600');
+
+                receiptWindow.document.write('<html><head><title>' + document.title +
+                    '</title></head><body>');
+                receiptWindow.document.write('<h1>' + document.title + '</h1>');
+                receiptWindow.document.write('<p>Date: ' + new Date().toLocaleDateString() + '</p>');
+                receiptWindow.document.write('<p>Time: ' + new Date().toLocaleTimeString() + '</p>');
+
+                receiptWindow.document.write(
+                    '<table border="1" cellspacing="0" cellpadding="0" width="100%">');
+                receiptWindow.document.write(
+                    '<thead><tr><th>Nama</th><th>Harga</th><th>Qty</th><th>Subtotal</th></tr></thead>');
+                receiptWindow.document.write('<tbody>');
+
+                cart.forEach(function(item) {
+                    receiptWindow.document.write('<tr>');
+                    receiptWindow.document.write('<td>' + item.name + '</td>');
+                    receiptWindow.document.write('<td>' + formatRupiah(item.price) + '</td>');
+                    receiptWindow.document.write('<td>' + item.quantity + '</td>');
+                    receiptWindow.document.write('<td>' + formatRupiah(item.subtotal) + '</td>');
+                    receiptWindow.document.write('</tr>');
+                });
+
+                receiptWindow.document.write('</tbody>');
+                receiptWindow.document.write('<tfoot><tr><td colspan="3">Total</td><td>' + formatRupiah(
+                    localStorage.getItem("cartTotal")) + '</td></tr></tfoot>');
+                receiptWindow.document.write('</table>');
+                receiptWindow.document.write('</body></html>');
+
+                receiptWindow.document.close();
+                receiptWindow.focus();
+
+                receiptWindow.print();
+                receiptWindow.close();
             });
-            receipt += "</tbody>";
-            receipt += "</table>";
-            receipt += "<p>==========================================</p>";
-            receipt += "<h5>Total: " + formatRupiah(localStorage.getItem("cartTotal")) + "</h5>";
-            receipt += "<h5>Jumlah Bayar: " + $("#amount").val() + "</h5>";
-            receipt += "<h5>Kembalian: " + formatRupiah($("#amount").val() - localStorage.getItem("cartTotal")) +
-                "</h5>";
-            receipt += "<p>==========================================</p>";
-            receipt += "<p>Thank you for shopping with us!</p>";
-            receipt += "</div>";
-                var originalContents = document.body.innerHTML;
-                document.body.innerHTML = receipt;
-                window.print();
-                document.body.innerHTML = originalContents;
-                location.reload();
-            });
+
+
 
             function updateCart() {
                 $("#cartBody").empty();
@@ -272,7 +268,7 @@
                 if (existingItem) {
                     existingItem.quantity++;
                     existingItem.subtotal = existingItem.price * existingItem.quantity;
-                    if(existingItem.quantity > existingItem.stok){
+                    if (existingItem.quantity > existingItem.stok) {
                         alert("Stok tidak mencukupi");
                         existingItem.quantity--;
                         existingItem.subtotal = existingItem.price * existingItem.quantity;

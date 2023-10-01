@@ -21,6 +21,10 @@ Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/receipt', function () {
+    return view('karyawan.invoice.index');
+});
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard.index');
     Route::get('/admin/barang', [AdminBarangController::class, 'index'])->name('admin.barang.index');

@@ -32,9 +32,6 @@
                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button class="dropdown-item" type="submit">Logout</button>
